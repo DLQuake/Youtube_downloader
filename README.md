@@ -5,7 +5,7 @@
  * [Pobranie i klonowanie](#pobranie-i-klonowanie)
 
 ## Krótki opis repozytorium
-W tym repozytorium znajduje się plik napisany w Python umożliwiający pobieranie filmów z platformy YouTube
+W tym repozytorium znajduje się plik napisany w Python umożliwiający pobieranie filmów z platformy [YouTube](https://www.youtube.com/)
 
 Do napisania posłużyłem się biblioteką [pytube](https://github.com/pytube/pytube)
 ## Pobranie i Klonowanie
