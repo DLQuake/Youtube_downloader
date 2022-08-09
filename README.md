@@ -1,15 +1,17 @@
 # Youtube downloader
 
-## Spis treści
- * [Krótki opis repozytorium](#krótki-opis-repozytorium)
- * [Pobranie i klonowanie](#pobranie-i-klonowanie)
+## Table of Contents
+ * [Brief description of the repository](#brief-description-of-the-repository)
+ * [Downloads](#downloads)
 
-## Krótki opis repozytorium
-W tym repozytorium znajduje się plik napisany w Python umożliwiający pobieranie filmów z platformy [YouTube](https://www.youtube.com/)
+## Brief description of the repository
+In this repository there is a file written in Python that allows you to download movies from the [YouTube](https://www.youtube.com/) platform
 
-Do napisania posłużyłem się biblioteką [pytube](https://github.com/pytube/pytube)
-## Pobranie i Klonowanie
-Można pobrać repozytorium na dwa sposoby:
+I used the [pytube](https://github.com/pytube/pytube) library to write
+
+## Downloads
+There are three ways to download the repository:
+* You can download from this [link](https://github.com/DLQuake/Youtube_downloader/releases/tag/Youtube_downloader). There is a 1.0 version of this program
 
 * ```bash
     git clone https://github.com/DLQuake/Youtube_downloader.git
