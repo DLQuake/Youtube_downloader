@@ -1,81 +1,71 @@
 from pytube import YouTube
 import os
 import sys
-import time
+
+def download_video(yt, path):
+    video = yt.streams.get_highest_resolution()
+    video.download(path)
+
+def download_audio(yt, path):
+    audio = yt.streams.filter(only_audio=True).first()
+    out_file = audio.download(path)
+    base, ext = os.path.splitext(out_file)
+    new_file = base + '.mp3'
+    os.rename(out_file, new_file)
+
+def download_video_without_audio(yt, path):
+    video_without_audio = yt.streams.filter(subtype='mp4', adaptive=True).first()
+    video_without_audio.download(path)
 
 while True:
     print("|-----------------------------|")
     print("|      YOUTUBE DOWNLOADER     |")
-    print("|        MENU  PROGRAMU       |")
-    print("|  1. Pobierz film z youtube  |")
-    print("|  2. Zamknij program         |")
+    print("|          PROGRAM MENU       |")
+    print("|  1. Download video from YT  |")
+    print("|  2. Exit program            |")
     print("|-----------------------------|")
 
     print()
-    number = input("Wybierz numer z menu (1-2): ")
+    number = input("Select option (1-2): ")
     print()
 
     if number == "1":
-        link = input("Wprowadź link filmu z Youtube: ")
+        link = input("Enter YT video link: ")
         yt = YouTube(link)
 
         print()
         print("|-------------------------------|")
-        print("|  Co chcesz uzyskać z filmu?   |")
-        print("|  1. Film                      |")
-        print("|  2. Tylko audio               |")
-        print("|  3. Film bez audio            |")
-        print("|  4. Wszystkie powyższe opcje  |")
+        print("|  What do you want to download?|")
+        print("|  1. Video                     |")
+        print("|  2. Audio only                |")
+        print("|  3. Video without audio       |")
+        print("|  4. All of the above          |")
         print("|-------------------------------|")
         print()
-        rodzaj = input("Wpisz numer opcji (1-4): ")
+        option = input("Enter option number (1-4): ")
 
-        if rodzaj == "1":
-            video = yt.streams.get_highest_resolution()
-            video.download('./Filmy')
-
-            print()
-            print("Film został pobrany pomyślnie")
-        elif rodzaj == "2":
-            audio = yt.streams.filter(only_audio=True).first()
-            out_file = audio.download('./Audio')
-            base, ext = os.path.splitext(out_file)
-            new_file = base + '.mp3'
-            os.rename(out_file, new_file)
-
-            print()
-            print("Audio zostało pobrane pomyślnie")
-        elif rodzaj == "3":
-            video_without_audio = yt.streams.filter(subtype='mp4', adaptive=True).first()
-            video_without_audio.download('./Filmy_bez_audio')
-
-            print()
-            print("Film bez dźwięk został pobrany pomyślnie")
-        elif rodzaj == "4":
-            video = yt.streams.get_highest_resolution()
-            video.download('./Filmy')
-
-            audio = yt.streams.filter(only_audio=True).first()
-            out_file = audio.download('./Audio')
-            base, ext = os.path.splitext(out_file)
-            new_file = base + '.mp3'
-            os.rename(out_file, new_file)
-
-            video_without_audio = yt.streams.filter(subtype='mp4', adaptive=True).first()
-            video_without_audio.download('./Filmy_bez_audio')
-
-            print()
-            print("Wszytko zostało pobrane pomyślnie")
+        if option == "1":
+            download_video(yt, './Videos')
+            print("Video has been downloaded successfully")
+        elif option == "2":
+            download_audio(yt, './Audios')
+            print("Audio has been downloaded successfully")
+        elif option == "3":
+            download_video_without_audio(yt, './Videos_without_audio')
+            print("Video without audio has been downloaded successfully")
+        elif option == "4":
+            download_video(yt, './Videos')
+            download_audio(yt, './Audios')
+            download_video_without_audio(yt, './Videos_without_audio')
+            print("Everything has been downloaded successfully")
         else:
-            print()
-            print("Nie ma takiej opcji")
+            print("Invalid option")
 
     elif number == "2":
         sys.exit(0)
     else:
-        print("Nie ma takiej opcji")
+        print("Invalid option")
 
     print()
-    print("Wciśnij enter by kontynuować")
-    number = sys.stdin.read(1)
+    input("Press enter to continue")
     os.system('cls')

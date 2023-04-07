@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Folders Videos, Audios, Videos_without_audio
+./Videos
+./Audios
+./Videos_without_audio
