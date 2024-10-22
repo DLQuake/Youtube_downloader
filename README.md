@@ -6,8 +6,6 @@
 * [Instructions](#instructions)
 * [Usage Examples](#usage-examples)
 * [Downloads](#downloads)
-* [Contributing](#contributing)
-* [License](#license)
 
 ## Brief Description of the Repository
 This repository contains a Python script that allows you to download videos from the [YouTube](https://www.youtube.com/) platform. The script utilizes the [yt-dlp](https://github.com/yt-dlp/yt-dlp) library, enabling users to easily download videos, audio, or both in various formats.
