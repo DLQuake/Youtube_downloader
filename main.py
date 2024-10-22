@@ -1,21 +1,47 @@
-from pytube import YouTube
 import os
 import sys
+import yt_dlp
 
-def download_video(yt, path):
-    video = yt.streams.get_highest_resolution()
-    video.download(path)
 
-def download_audio(yt, path):
-    audio = yt.streams.filter(only_audio=True).first()
-    out_file = audio.download(path)
-    base, ext = os.path.splitext(out_file)
-    new_file = base + '.mp3'
-    os.rename(out_file, new_file)
+def download_video(yt_url, path):
+    ydl_opts = {
+        'format': 'bestvideo[height<=1080][fps>=24][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][fps>=24][ext=mp4]',
+        'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
+        'merge_output_format': 'mp4',
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([yt_url])
 
-def download_video_without_audio(yt, path):
-    video_without_audio = yt.streams.filter(subtype='mp4', adaptive=True).first()
-    video_without_audio.download(path)
+
+def download_audio(yt_url, path):
+    ydl_opts = {
+        'format': 'bestaudio[ext=m4a]',
+        'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([yt_url])
+
+    # Rename to .mp3
+    for file in os.listdir(path):
+        if file.endswith(".m4a"):
+            base = os.path.splitext(file)[0]
+            new_file = os.path.join(path, base + '.mp3')
+            os.rename(os.path.join(path, file), new_file)
+
+
+def download_video_without_audio(yt_url, path):
+    ydl_opts = {
+        'format': 'bestvideo[height<=1080][fps>=24][ext=mp4]',
+        'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([yt_url])
+
+
+def create_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 
 while True:
     print("|-----------------------------|")
@@ -31,7 +57,6 @@ while True:
 
     if number == "1":
         link = input("Enter YT video link: ")
-        yt = YouTube(link)
 
         print()
         print("|-------------------------------|")
@@ -42,21 +67,32 @@ while True:
         print("|  4. All of the above          |")
         print("|-------------------------------|")
         print()
+
         option = input("Enter option number (1-4): ")
 
         if option == "1":
-            download_video(yt, './Videos')
+            create_directory('./Files/Videos')
+            download_video(link, './Files/Videos')
+            print()
             print("Video has been downloaded successfully")
         elif option == "2":
-            download_audio(yt, './Audios')
+            create_directory('./Files/Audios')
+            download_audio(link, './Files/Audios')
+            print()
             print("Audio has been downloaded successfully")
         elif option == "3":
-            download_video_without_audio(yt, './Videos_without_audio')
+            create_directory('./Files/Videos_without_audio')
+            download_video_without_audio(link, './Files/Videos_without_audio')
+            print()
             print("Video without audio has been downloaded successfully")
         elif option == "4":
-            download_video(yt, './Videos')
-            download_audio(yt, './Audios')
-            download_video_without_audio(yt, './Videos_without_audio')
+            create_directory('./Files/Videos')
+            create_directory('./Files/Audios')
+            create_directory('./Files/Videos_without_audio')
+            download_video(link, './Files/Videos')
+            download_audio(link, './Files/Audios')
+            download_video_without_audio(link, './Files/Videos_without_audio')
+            print()
             print("Everything has been downloaded successfully")
         else:
             print("Invalid option")
@@ -66,6 +102,5 @@ while True:
     else:
         print("Invalid option")
 
-    print()
     input("Press enter to continue")
-    os.system('cls')
+    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
