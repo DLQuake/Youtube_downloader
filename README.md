@@ -52,7 +52,6 @@ Additionally, ensure you have [FFmpeg](https://ffmpeg.org/download.html) install
 
 ## Downloads
 You can download the repository using one of the following methods:
-* Download the program from the [releases page](https://github.com/DLQuake/Youtube_downloader/releases/tag/Updated). The current version is 1.1.
 * Clone the repository using Git:
     ```bash
     git clone https://github.com/DLQuake/Youtube_downloader.git
